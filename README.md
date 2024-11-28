@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="https://img.shields.io/github/repo-size/wwwarma/Cplus-17" alt="GitHub repo size">
-</p>
-
-![老八](Pic/老八.jpg)
+![老八](Cplus-17/Pic/老八.jpg)
 
 <p align="right">
   <a href="https://www.pixiv.net/artworks/121573531" target="_blank" style="text-decoration: none;">
