@@ -41,6 +41,42 @@ int largest(double *pvalues, size_t count);
 // void do_it(std::string number);
 // void do_it(std::string& number);
 
+double larger(double a, double b);
+long &larger(long &a, long &b);
+// long larger(const long &a, const long &b);
+
+// 4. 重载与 const 参数
+// ! const 与 非const 参数的唯一区别 是 为引用定义参数 还是 为指针定义参数
+
+// ! 下面的函数原型没有区别
+// long larger(long a, long b);
+// const long larger(const long a, const long b);
+// ! 实参在按值传送时，定义为 const 是毫无意义的
+// !!! 注意，可以在函数声明时增加 const ，这样可以避免实参在函数作用域内被修改
+/*
+    long larger(const long a, const long b)
+    {
+        ...
+    }
+*/
+// 4.1 重载 与 const 指针参数
+// type* 与 const type* 对应 两个不同的函数
+long *larger(long *a, long *b);
+const long *larger(const long *a, const long *b);
+// ! const 表示该指针 指向常量，禁止修改指针指向的值
+
+// 与上面相反，以下两个函数是同一个函数
+// long *larger(long *const a, long * const b);
+// const long *larger(const long *const a, const long *const b);
+// ! 在指针被定义为 const 后，指针的指向不能修改
+// ! 而指针指向的值也是 const，这说明函数内部不可能出现任何有关的 重新赋值的操作
+
+// 4.2 重载 与 const 引用参数
+// 引用参数在声明为 const 时，在本质上已经是常量，因此 const T& 与 T& 总是不同的
+// ! 下面两个函数是 重载的
+long &larger(long &a, long &b);
+long larger(const long &a, const long &b);
+
 int main()
 {
     double values[]{1.5, 44.6, 13.7, 21.2, 6.7};
@@ -62,6 +98,25 @@ int main()
     // 调用 函数模板
     std::vector<size_t> template_numbers{0, 1, 2, 3, 4, 5, 67};
     largest(template_numbers);
+
+    // 重载与引用参数
+    double a_double{1.5}, b_double{2.5};
+    int a_int{15}, b_int{25};
+    larger(a_double, b_double); // 调用 double larger(double a, double b)
+    // larger(static_cast<long>(a_int), static_cast<long>(b_int));
+    // ! 这里调用的不是 long &larger(long &a, long &b)，而是double larger(double a, double b)
+    // 虽然传入的 int 类型 转换成了 long 类型，但是它是包含相同值的临时位置
+    // ! 编译器不会使用 临时地址 来初始化 对 非 const 值的引用
+    // 可以使用 long larger(const long &a, const long &b)
+
+    // const 指针重载
+    long x{10}, y{20};
+    const long cx{10}, cy{20};
+    // 调用非 const 指针重载函数
+    long z{*larger(&x, &y)};
+    // 调用 const 指针重载函数
+    const long cz{*larger(&cx, &cy)};
+    // 编译器不会把 const 值 传递给 非 const 指针参数的函数
 }
 
 double largest(const double data[], size_t count)
@@ -130,4 +185,34 @@ int largest(double *pvalues, size_t count)
             max = pvalues[i];
     std::cout << "int largest(double* pvalues, size_t count): " << max << std::endl;
     return static_cast<int>(max);
+}
+
+// 重载与引用参数
+double larger(double a, double b)
+{
+    std::cout << "double larger(double a, double b)" << std::endl;
+    return (a > b) ? a : b;
+}
+
+long &larger(long &a, long &b)
+{
+    std::cout << "long &larger(long &a, long &b)" << std::endl;
+    return (a > b) ? a : b;
+}
+// long larger(const long &a, const long &b)
+// {
+//     return (a > b) ? a : b;
+// }
+
+// const 指针重载
+long *larger(long *a, long *b)
+{
+    std::cout << "long *larger(long *a, long *b)" << std::endl;
+    return (*a > *b) ? a : b;
+}
+
+const long *larger(const long *a, const long *b)
+{
+    std::cout << "const long *larger(const long *a, const long *b)" << std::endl;
+    return (*a > *b) ? a : b;
 }
