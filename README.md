@@ -1,4 +1,4 @@
-![老八](Cplus-17/Pic/老八.jpg)
+![老八](Cplusplus17/Pic/老八.jpg)
 
 <p align="right">
   <a href="https://www.pixiv.net/artworks/121573531" target="_blank" style="text-decoration: none;">
