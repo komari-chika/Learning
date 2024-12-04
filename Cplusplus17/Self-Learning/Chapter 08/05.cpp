@@ -216,12 +216,12 @@ int main()
 }
 
 // 测试函数
-template <typename Func, typename... Args>
 /**
  * @brief 测量给定函数的执行时间和内存使用情况。
  *
  * @tparam Func 要测量的函数类型。
  * @tparam Args 要传递给函数的参数类型。
+ * @param coutResult 是否输出结果的可选参数。
  * @param name 表示被测量函数名称的字符串。
  * @param func 要测量的函数。
  * @param args 要传递给函数的参数。
@@ -231,6 +231,7 @@ template <typename Func, typename... Args>
  * 执行时间（以秒为单位）和内存使用量（以字节为单位）。如果函数有
  * 非void返回类型，它还会打印函数的结果。
  */
+template <typename Func, typename... Args>
 void test_function(std::optional<bool> coutResult, const std::string &name, Func func, Args... args)
 {
     auto start = std::chrono::high_resolution_clock::now();
