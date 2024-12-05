@@ -5,27 +5,49 @@
 #include <cctype>
 #include <sstream>
 
-void test01() { }
-void test02() { }
-void test03() { }
-void test04() { }
-void test05() { }
-void test06() { }
-void test07() { }
-void test08() { }
+void test01() { std::cout << "test01 called" << std::endl; }
+void test02() { std::cout << "test02 called" << std::endl; }
+void test03() { std::cout << "test03 called" << std::endl; }
+void test04() { std::cout << "test04 called" << std::endl; }
+void test05() { std::cout << "test05 called" << std::endl; }
+void test06() { std::cout << "test06 called" << std::endl; }
+void test07() { std::cout << "test07 called" << std::endl; }
+void test08() { std::cout << "test08 called" << std::endl; }
 
 int main()
 {
     size_t number = 1;
 
-    // 创建函数指针数组
-    void (*testFunctions[])() = { test01, test02, test03, test04, test05, test06, test07, test08 };
-
-    // 检查number是否在有效范围内
-    if (number > 0 && number <= sizeof(testFunctions) / sizeof(testFunctions[0]))
+    switch (number)
     {
-        // 调用相应的测试函数
-        testFunctions[number - 1]();
+        case 1:
+            test01();
+            break;
+        case 2:
+            test02();
+            break;
+        case 3:
+            test03();
+            break;
+        case 4:
+            test04();
+            break;
+        case 5:
+            test05();
+            break;
+        case 6:
+            test06();
+            break;
+        case 7:
+            test07();
+            break;
+        case 8:
+            test08();
+            break;
+        default:
+            std::cerr << "Invalid number" << std::endl;
+            break;
     }
+
     return 0;
 }

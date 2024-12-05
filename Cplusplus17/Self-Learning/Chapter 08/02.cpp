@@ -7,6 +7,7 @@
 
 // 默认实参值
 // 不需要特殊参数时，使用默认参数
+// ! 只能在一个地方指定，通常建议将默认值放在函数声明中
 void show_error(std::string_view message = "Program Error.")
 {
     std::cout << message << std::endl;
