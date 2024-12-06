@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <string_view>
+#include <array>
+#include <optional>
 
 /*
 1. 编写一个函数 validate_input()，它接收两个整数参数，表示要输入的整数的上下限。
@@ -74,4 +76,17 @@ bool checkIsPrime(size_t n);
 std::vector<size_t> generateNumbers(size_t max_number, size_t start_number = 1);
 std::vector<size_t> findAllPrime(std::vector<size_t> input_numbers);
 
+void test06();
+void swapGrade(double &a, double &b);
+void sortGrades(std::vector<double> &grades);
+void sortGrades(std::vector<double> &grades, int start, int end);
+std::array<std::optional<double>, 5> fiveMaxGrade(std::vector<double> grades);
+std::array<std::optional<double>, 5> fiveMinGrade(std::vector<double> grades);
+std::optional<double> averageGrade(std::vector<double> grades);
+std::optional<double> medianGrade(std::vector<double> grades);
+std::optional<double> standardDeviation(std::vector<double> grades);
+std::optional<double> variance(std::vector<double> grades);
+void displayVector(std::vector<double> numbers);
+void showNumbers(std::string_view description, const std::array<std::optional<double>, 5> &numbers);
+void showNumber(std::string_view description, const std::optional<double> &number);
 #endif // HEADER_FILENAME_H

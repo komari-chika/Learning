@@ -4,6 +4,9 @@
 #include <limits>
 #include <vector>
 #include <iomanip>
+#include <memory>
+#include <optional>
+#include <cmath>
 #include "exam.h"
 // test01
 void test01()
@@ -225,4 +228,198 @@ std::vector<size_t> findAllPrime(std::vector<size_t> input_numbers)
             output_numbers.push_back(number);
     }
     return output_numbers;
+}
+
+// test06()
+void test06()
+{
+    // std::cout << "Input grades line by line, and stop with a negetive number" << std::endl;
+    // std::vector<double> grades;
+    // double grade;
+    // while (true)
+    // {
+    //     std::cin >> grade;
+    //     if (std::cin.fail())
+    //     {
+    //         std::cout << "invalid number" << std::endl;
+    //         std::cin.clear();
+    //         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    //         continue;
+    //     }
+    //     if (grade < 0)
+    //         break;
+    //     grades.push_back(grade);
+    // }
+
+    // std::vector<double> grades{1, 23, 2, 77, 5, 1, 5, 1};
+    // sortGrades(grades, 0, grades.size() - 1);
+    // std::array<std::optional<double>, 5> Max{fiveMaxGrade(grades)};
+    // std::array<std::optional<double>, 5> Min{fiveMinGrade(grades)};
+
+    std::vector<std::vector<double>> gradess{
+        {1, 23, 2, 77, 5, 1, 5, 1},
+        {4, 3, 2},
+        {}};
+    for (auto grades : gradess)
+    {
+        sortGrades(grades, 0, grades.size() - 1);
+        // std::array<std::optional<double>, 5> Max{fiveMaxGrade(grades)};
+        // std::array<std::optional<double>, 5> Min{fiveMinGrade(grades)};
+        displayVector(grades);
+        showNumbers("fiveMaxGrade", fiveMaxGrade(grades));
+        showNumbers("fiveMinGrade", fiveMinGrade(grades));
+        showNumber("averageGrade", averageGrade(grades));
+        showNumber("medianGrade", medianGrade(grades));
+        showNumber("standardDeviation", standardDeviation(grades));
+        showNumber("variance", variance(grades));
+        std::cout << std::endl;
+    }
+}
+
+void swapGrade(double &a, double &b)
+{
+    double temp = a;
+    a = b;
+    b = temp;
+}
+
+void sortGrades(std::vector<double> &grades)
+{
+    sortGrades(grades, 0, grades.size() - 1);
+}
+
+void sortGrades(std::vector<double> &grades, int start, int end)
+{
+    if (start < end)
+    {
+        double pivot{grades[end]};
+        int i{start - 1};
+        for (int j{start}; j <= end; ++j)
+        {
+            if (grades[j] < pivot)
+            {
+                i++;
+                swapGrade(grades[i], grades[j]);
+            }
+        }
+
+        swapGrade(grades[i + 1], grades[end]);
+
+        if (i > start)
+            sortGrades(grades, start, i);
+        if (i + 1 < end)
+            sortGrades(grades, i + 2, end);
+    }
+}
+
+std::array<std::optional<double>, 5> fiveMaxGrade(std::vector<double> grades)
+{
+    std::array<std::optional<double>, 5> Max{};
+    size_t length{grades.size()};
+    if (length <= 5)
+    {
+        for (size_t i{}; i < length; ++i)
+        {
+            Max[i] = grades[i];
+        }
+    }
+    else
+    {
+        for (size_t i{}; i < 5; ++i)
+        {
+            Max[i] = grades[length - 5 + i];
+        }
+    }
+    return Max;
+}
+
+std::array<std::optional<double>, 5> fiveMinGrade(std::vector<double> grades)
+{
+    size_t length = (grades.size() <= 5) ? grades.size() : 5;
+    std::array<std::optional<double>, 5> Min{};
+    for (size_t i{}; i < length; ++i)
+    {
+        Min[i] = grades[i];
+    }
+    // 由于 std::array 是默认初始化的
+    // 剩余的元素默认已经是 std::nullopt，所以不需要额外处理
+    return Min;
+}
+
+std::optional<double> averageGrade(std::vector<double> grades)
+{
+    if (grades.empty())
+        return std::nullopt;
+    double total;
+    for (const auto &grade : grades)
+    {
+        total += grade;
+    }
+    return total / grades.size();
+}
+
+std::optional<double> medianGrade(std::vector<double> grades)
+{
+    size_t gradesSize{grades.size()};
+    std::optional<double> median{};
+    if (gradesSize == 0)
+        return std::nullopt;
+    if (gradesSize % 2 == 0)
+    {
+        median = (grades[gradesSize / 2 - 1] + grades[gradesSize / 2]) / 2;
+    }
+    else
+    {
+        median = grades[gradesSize / 2];
+    }
+    return median;
+}
+
+std::optional<double> variance(std::vector<double> grades)
+{
+    if (grades.empty())
+        return std::nullopt;
+    double avg{averageGrade(grades).value()};
+    double total{};
+    for (auto grade : grades)
+    {
+        total += std::pow(grade - avg, 2);
+    }
+    return total / grades.size();
+}
+
+std::optional<double> standardDeviation(std::vector<double> grades)
+{
+    if (grades.empty())
+        return std::nullopt;
+    return std::sqrt(variance(grades).value());
+}
+
+void displayVector(std::vector<double> numbers)
+{
+    std::cout << "displayVector : ";
+    for (auto number : numbers)
+    {
+        std::cout << number << " ";
+    }
+    std::cout << std::endl;
+}
+
+void showNumbers(std::string_view description, const std::array<std::optional<double>, 5> &numbers)
+{
+    std::cout << description << " : ";
+    for (auto &number : numbers)
+    {
+        if (number)
+            std::cout << number.value() << ' ';
+    }
+    std::cout << std::endl;
+}
+
+void showNumber(std::string_view description, const std::optional<double> &number)
+{
+    std::cout << description << " : ";
+    if (number)
+        std::cout << number.value();
+    std::cout << std::endl;
 }
