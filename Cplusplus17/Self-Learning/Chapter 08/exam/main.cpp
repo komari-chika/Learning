@@ -3,7 +3,7 @@
 #include "func.cpp"
 int main(int argc, char *argv[])
 {
-    size_t number = 6;
+    size_t number = 9;
 
     switch (number)
     {
@@ -24,6 +24,15 @@ int main(int argc, char *argv[])
         break;
     case 6:
         test06();
+        break;
+    case 7:
+        test07();
+        break;
+    case 8:
+        test08();
+        break;
+    case 9:
+        test09();
         break;
     default:
         std::cerr << "Invalid test number" << std::endl;

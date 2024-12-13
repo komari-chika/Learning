@@ -89,4 +89,54 @@ std::optional<double> variance(std::vector<double> grades);
 void displayVector(std::vector<double> numbers);
 void showNumbers(std::string_view description, const std::array<std::optional<double>, 5> &numbers);
 void showNumber(std::string_view description, const std::optional<double> &number);
+
+/*
+Exercise 8-7.
+The so-called Fibonacci function is popular among lecturers in computer science and mathematics for introducing recursion. This function has to compute the nth number from the famous Fibonacci sequence, named after ltalian mathematician Leonardo of Pisa, known also as Fibonacci.This sequence of positive integer numbers is characterized by the fact that every number after the first two is the sum of the two preceding ones.
+
+For n > 1, the sequence is defined as follows:
+1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181...
+! For convenience, computer scientists mostly define an additional zeroth Fibonacci number as zero.
+! Write a function to compute the nth Fibonacci number recursively. Test it with a simple program that prompts the user for how many numbers should be computed and then prints them out one by one, each on a different line.
+
+Extra: While the naive recursive version of the Fibonacci function is very elegant-the code matches nearly verbatim with common mathematical definitions it is notorious for being very slow. lf you ask the computer to compute, say, 100 Fibonacci numbers. you'll notice that it becomes noticeably slower and slower as n becomes larger. Do you think you can rewrite the function to use a loop instead of recursion? How many numbers can you correctly compute now?
+
+Hint: in each iteration of the loop, you'll naturally want to compute a next number. To do this, all you need are the previous two numbers. So, there should be no need to keep track of the full sequence in, for instance, a vector<>.
+*/
+void test07();
+unsigned long long Fibonacci1(size_t n);
+unsigned long long Fibonacci2(size_t n);
+unsigned long long Fibonacci3(size_t n);
+
+/*
+Exercise 8-8.
+lf written using a more mathematical notation, the power() functions we wrote in Ex8_01 and especially Ex8 17 both essentially compute a power(x,n) for n > 0, as follows:
+power(x,n) = x * power(x, n - 1)
+           = x * (x * power(x, n - 2))
+           = x * (x * (x * ...(x * x)...)))
+
+Clearly, this method reguires exactly n - 1 multiplications. lt may surprise you, but there is another, much more effective way. Suppose n is even; then you know the following:
+power(x, n) = power(x, n / 2) * power(x, n / 2)
+As both operands of this multiplication are identical, you need to compute this value only once. That is, you have just reduced the computation of power(x, n) to that of power(x, n / 2), which obviously at most requires half as many multiplications. 
+Moreover, because you can now apply this formula recursively, you'll need even far fewer multiplications than that only something in the order of log2(n) to be exact.
+To give you an idea, this means that for n in the order of 1000, you only need in the order of 10 multiplications! Can you apply this idea to create a more efficient recursive version of power()? 
+You can start from the program in Ex8_17.cpp.
+Note: This principle is something you'll often see in recursive algorithms. In each recursive call, you reduce a problem to a problem of half the size. lf you think back, you'll realize that we applied the same principle in the quicksort algorithm as well. for instance. Because this solution strategy is that common, it also has a name; it's called divide and conquer, after the famous phrase of Julius Caesar.
+*/
+void test08();
+double power1(double x, int n);
+double power2(double x, int n);
+
+
+/*
+Exercise 8-9. 
+Modify the solution of Exercise 8-8 such that it counts the number of times the call power(1.5,1000) performs a multiplication. 
+Do so by replacing each multiplication with a helper function mult() that takes two arquments, prints a message of how many multiplications have been performed thus far, and then simply returns the product of both arguments. 
+Use at least one static variable.
+*/
+void test09();
+double power3(double x, int n);
+double power4(double x, int n);
+double mult3(double num1, double num2);
+double mult4(double num1, double num2);
 #endif // HEADER_FILENAME_H

@@ -423,3 +423,154 @@ void showNumber(std::string_view description, const std::optional<double> &numbe
         std::cout << number.value();
     std::cout << std::endl;
 }
+
+// test07()
+void test07()
+{
+    size_t n;
+
+    std::cout << "Enter n: ";
+    std::cin >> n;
+    Fibonacci1(n);
+    std::cout << std::endl;
+    Fibonacci2(n);
+    std::cout << std::endl;
+    std::cout << Fibonacci3(n) << std::endl;
+}
+
+unsigned long long Fibonacci1(size_t n)
+{
+    if (n == 1 || n == 2)
+    {
+        std::cout << "Fibonacci1(" << n << ") = 1" << std::endl;
+        return 1;
+    }
+    else
+    {
+
+        std::cout << "Fibonacci1(" << n << ") = " << "Fibonacci1(" << n - 1 << ") + Fibonacci1(" << n - 2 << ")" << std::endl;
+        return Fibonacci1(n - 1) + Fibonacci1(n - 2);
+    }
+}
+
+unsigned long long Fibonacci2(size_t n)
+{
+    std::vector<unsigned long long> fb_numbers(n);
+    fb_numbers[0] = 1;
+    std::cout << "Fibonacci2(1)" << std::endl;
+    fb_numbers[1] = 1;
+    std::cout << "Fibonacci2(2)" << std::endl;
+    for (size_t i{2}; i < n; ++i)
+    {
+        std::cout << "Fibonacci2(" << i + 1 << ") = " << "Fibonacci2(" << i << ") + Fibonacci2(" << i - 1 << ")" << std::endl;
+        fb_numbers[i] = fb_numbers[i - 1] + fb_numbers[i - 2];
+    }
+    return fb_numbers[n - 1];
+}
+
+unsigned long long Fibonacci3(size_t n)
+{
+    unsigned long long fb_1{1};
+    unsigned long long fb_2{1};
+    unsigned long long fb_n_2{fb_1}, fb_n_1{fb_2}, fb_n{fb_1};
+    for (size_t i{2}; i < n; ++i)
+    {
+        fb_n = fb_n_2 + fb_n_1;
+        fb_n_2 = fb_n_1;
+        fb_n_1 = fb_n;
+    }
+    return fb_n;
+}
+
+// test08()
+void test08()
+{
+    double x;
+    int n;
+    std::cout << "Input double(x) and int(n):" << std::endl;
+    std::cin >> x >> n;
+    std::cout << "power1(" << x << ", " << n << ") = " << power1(x, n) << std::endl;
+    std::cout << "power2(" << x << ", " << n << ") = " << power2(x, n) << std::endl;
+}
+
+double power1(double x, int n)
+{
+    if (n == 0)
+        return 1;
+    else if (n > 0)
+        return x * power1(x, n - 1);
+    else
+        return 1 / power1(x, -n);
+}
+
+double power2(double x, int n)
+{
+    if (n == 0)
+        return 1;
+    else if (n < 0)
+        return 1 / power2(x, -n);
+    else
+    {
+        double half = power2(x, n / 2);
+        if (n % 2 == 0)
+            return half * half;
+        else
+            return x * half * half;
+    }
+}
+
+// test09()
+void test09()
+{
+    double x;
+    int n;
+    std::cout << "Input double(x) and int(n):" << std::endl;
+    std::cin >> x >> n;
+
+    std::cout << "power3(x, n) : " << std::endl;
+    power3(x, n);
+    std::cout << "power4(x, n) : " << std::endl;
+    power4(x, n);
+}
+
+double power3(double x, int n)
+{
+    if (n == 0)
+        return 1;
+    else if (n > 0)
+        return mult3(x, power3(x, n - 1));
+    else
+        return 1 / power3(x, -n);
+}
+
+double power4(double x, int n)
+{
+    if (n == 0)
+        return 1;
+    else if (n < 0)
+        return 1 / power4(x, -n);
+    else
+    {
+        double half = power4(x, n / 2);
+        if (n % 2 == 0)
+            return mult4(half, half);
+        else
+            return mult4(x, mult4(half, half));
+    }
+}
+
+double mult3(double num1, double num2)
+{
+    static size_t mult_count3{};
+    mult_count3++;
+    std::cout << "power3() already use " << mult_count3 << " times multiply." << std::endl;
+    return num1 * num2;
+}
+
+double mult4(double num1, double num2)
+{
+    static size_t mult_count4{};
+    mult_count4++;
+    std::cout << "power4() already use " << mult_count4 << " times multiply." << std::endl;
+    return num1 * num2;
+}
