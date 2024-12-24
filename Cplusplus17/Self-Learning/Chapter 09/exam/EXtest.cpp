@@ -1,6 +1,7 @@
 #include "exercise.h"
 #include <iostream>
-
+#include <vector>
+#include <array>
 void Ex9_1()
 {
     int a1 = 5, b1 = 3, c1 = 8;
@@ -43,4 +44,46 @@ void Ex9_2()
               << "\"" << zz_string << "\"" << " is "
               << "\"" << larger(aa_string, zz_string) << "\""
               << std::endl;
+}
+
+void Ex9_3()
+{
+    int a1{1};
+    double a2{2.2};
+    std::cout << plus(a1, a2) << std::endl;
+
+    int *b1{&a1};
+    double *b2{&a2};
+    std::cout << plus(b1, b2) << std::endl;
+
+    std::string c1{"aaa"};
+    std::string c2{"bb"};
+    std::cout << plus(c1, c2) << std::endl;
+
+    const char d1[]{"aa"};
+    const char d2[]{"bbb"};
+    std::cout << plus("aa", "bbb") << std::endl;
+    std::cout << plus(d1, d2) << std::endl;
+}
+
+void Ex9_4()
+{
+    
+    std::vector<double> a1{1.1, 2.2, 3.3, 4.4, 5.5};
+    std::cout << my_size(a1) << std::endl;
+
+    std::array<int, 4> a2{1, 2, 3, 4};
+    std::cout << my_size(a2) << std::endl;
+
+    int a3[]{1,3,5,6};
+    std::cout << my_size(a3) << std::endl;
+
+}
+
+void Ex9_5()
+{
+}
+
+void Ex9_6()
+{
 }
