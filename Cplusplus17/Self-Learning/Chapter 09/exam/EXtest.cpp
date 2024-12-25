@@ -68,22 +68,32 @@ void Ex9_3()
 
 void Ex9_4()
 {
-    
+
     std::vector<double> a1{1.1, 2.2, 3.3, 4.4, 5.5};
     std::cout << my_size(a1) << std::endl;
 
     std::array<int, 4> a2{1, 2, 3, 4};
     std::cout << my_size(a2) << std::endl;
 
-    int a3[]{1,3,5,6};
+    int a3[]{1, 3, 5, 6};
     std::cout << my_size(a3) << std::endl;
-
 }
 
 void Ex9_5()
 {
+    larger1(1.3, 1);
+    larger1(1.3, 1);
+    larger1(1.3, 1);
 }
 
 void Ex9_6()
 {
+    std::vector<int> a1{1, 4, 5, 3, 1, 1212, -31231};
+    quickSort(a1);
+
+    std::vector<double> a2{2.3, 4, 1, 2.2, 123, -312.3};
+    quickSort(a2);
+
+    std::vector<std::string> a3{"adef", "foejij", "dda", "zzz", "rooiuit", "dveiogh"};
+    quickSort(a3);
 }

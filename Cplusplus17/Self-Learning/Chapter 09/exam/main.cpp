@@ -5,7 +5,7 @@
 
 int main()
 {
-    const size_t n = 4;
+    const size_t n = 6;
     switch (n)
     {
     case 1:
@@ -29,6 +29,5 @@ int main()
     default:
         break;
     }
-
     return 0;
 }

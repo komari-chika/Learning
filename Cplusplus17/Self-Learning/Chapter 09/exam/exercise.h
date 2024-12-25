@@ -3,6 +3,9 @@
 #include <string_view>
 #include <vector>
 #include <array>
+#include <optional>
+#include <iomanip>
+#include <random> 
 /*
 Exercise 9-1.
 In C++ 17, the Standard Library algorithm header gained the handy std::clamp() function template.
@@ -172,7 +175,7 @@ You are not allowed to use the sizeof() operator.
 void Ex9_4();
 
 template <typename T, size_t N>
-size_t my_size(const T (&a)[N])  // ! 使用引用来推断固定大小数组，见 Chapter 08/01.cpp
+size_t my_size(const T (&a)[N]) // ! 使用引用来推断固定大小数组，见 Chapter 08/01.cpp
 // 7. 引用传递数组
 // ! 与值传递和指针传递不同，引用传递可以传递 精确的数组大小
 {
@@ -184,7 +187,7 @@ size_t my_size(const std::vector<T> &a)
 {
     // return a.size();
     size_t count{0};
-    for(auto val : a)
+    for (auto val : a)
         count++;
     return count;
 }
@@ -202,10 +205,87 @@ Can you think of a way to verify that
 Do so for the larger() function in Ex9_01.cpp.
 */
 // ! static 变量
+void Ex9_5();
+template <typename T1, typename T2>
+decltype(auto) larger1(const T1 &a, const T2 &b)
+{
+    static size_t count{};
+    count++;
+    std::cout << "this larger1() has been called " << count << " times." << std::endl;
+    return a > b ? a : b;
+}
 
 /*
 Exercise 9-6.
-In the previous chapter, you studied a quicksort algorithm that worked for pointers-to-strings. Generalize the implementation of Ex8_18.cpp so that it works for vectors of any type (any type for which the < operator exists, that is).
+In the previous chapter, you studied a quicksort algorithm that worked for pointers-to-strings.
+Generalize the implementation of Ex8_18.cpp so that it works for vectors of any type (any type for which the < operator exists, that is).
 Write a main() function that uses this to sort some vectors with different element types and outputs both the unsorted and unsorted element lists.
 Naturally, you should do this by also creating a function template that streams vectors with arbitrary element types to std::cout.
 */
+void Ex9_6();
+
+// 1. std::vector<int>, std::vector<float>..
+template <typename T>
+void swap(T &a, T &b)
+{
+    T temp = a;
+    a = b;
+    b = temp;
+}
+
+template <typename T>
+int partition(std::vector<T> &values, int left, int right)
+{
+    T pivot{values[left]};
+    int i{left};
+    for (int j{left + 1}; j <= right; ++j)
+    {
+        if (values[j] < pivot)
+        {
+            i++;
+            swap(values[i], values[j]);
+        }
+    }
+    swap(values[i], values[left]);
+    return i;
+}
+
+template <typename T>
+void quickSort(std::vector<T> &values, int left, int right)
+{
+    if (left < right)
+    {
+        int pi = partition(values, left, right);
+        quickSort(values, left, pi - 1);
+        quickSort(values, pi + 1, right);
+    }
+}
+
+template <typename T>
+void coutVector(const std::vector<T> &values, std::string description, size_t newLine = 5, size_t wordLength = 8)
+{
+    std::cout << description << " : " << std::endl;
+    for (size_t i{}; i < values.size(); ++i)
+    {
+        std::cout << std::setw(wordLength) << values[i] << " ";
+        if ((i + 1) % newLine == 0)
+            std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+template <typename T>
+void quickSort(std::vector<T> &values)
+{
+    if (values.empty())
+    {
+        std::cout << "invalid input" << std::endl;
+        return;
+    }
+    else
+    {
+        coutVector(values, "Origin");
+        quickSort(values, 0, values.size() - 1);
+        coutVector(values, "Sorted");
+    }
+}
