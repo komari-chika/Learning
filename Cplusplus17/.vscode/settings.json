@@ -78,5 +78,7 @@
     "chrono": "cpp",
     "forward_list": "cpp",
     "string_view": "cpp"
-  }
+  },
+  "commentTranslate.source": "Google",
+  "commentTranslate.hover.enabled": true
 }
