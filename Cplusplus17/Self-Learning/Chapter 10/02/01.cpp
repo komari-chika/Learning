@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include "Power.cpp"
-#include "Range.cpp"
+// #include "Power.cpp"
+// #include "Range.cpp"
 
 // 外部变量
 double power(double x, int n);
